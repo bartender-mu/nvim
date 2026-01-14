@@ -43,6 +43,18 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Whitespace cleanup on save: trim trailing spaces and squeeze extra spaces
+local whitespace_group = vim.api.nvim_create_augroup("WhitespaceCleanup", {})
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = whitespace_group,
+	callback = function()
+		-- Trim trailing whitespace
+		vim.cmd([[%s/\s\+$//e]])
+		-- Squeeze multiple consecutive spaces to one (preserve single spaces and indentation)
+		vim.cmd([[%s/\([^ ]\)\s\s\+/\1 /ge]])
+	end,
+})
+
 -- on attach function shortcuts
 local lsp_on_attach_group = vim.api.nvim_create_augroup("LspMappings", {})
 vim.api.nvim_create_autocmd("LspAttach", {

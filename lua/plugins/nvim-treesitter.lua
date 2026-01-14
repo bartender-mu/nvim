@@ -20,6 +20,7 @@ return {
 				"css",
 				"dockerfile",
 				"go",
+				"groovy",
 				"html",
 				"javascript",
 				"json",

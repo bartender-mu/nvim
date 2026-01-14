@@ -26,6 +26,8 @@ return {
 			python = { "black" },
 			rust = { "rustfmt" },
 			go = { "goimports", "gofmt" },
+			groovy = { "npm-groovy-lint" },
+			Jenkinsfile = { "npm-groovy-lint" },
 			sh = { "shfmt" },
 			-- Add more as needed
 		},
