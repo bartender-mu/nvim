@@ -77,7 +77,7 @@ vim.opt.iskeyword:append("-") -- Treat dash as part of a word
 vim.opt.path:append("**") -- Search into subfolders with `gf`
 vim.opt.selection = "inclusive" -- Use inclusive selection
 vim.opt.mouse = "a" -- Enable mouse support
-vim.opt.clipboard:append("unnamedplus") -- Use system clipboard
+vim.opt.clipboard = "unnamedplus" -- Use system clipboard
 vim.opt.modifiable = true -- Allow editing buffers
 vim.opt.encoding = "UTF-8" -- Use UTF-8 encoding
 vim.opt.wildmenu = true -- Enable command-line completion menu
@@ -102,5 +102,38 @@ vim.opt.foldlevel = 99 -- Keep all folds open by default
 -- Split Behavior
 vim.opt.splitbelow = true -- Horizontal splits open below
 vim.opt.splitright = true -- Vertical splits open to the right
+
+-- Clipboard provider for systems without built-in clipboard support
+if vim.fn.has('clipboard') == 0 then
+  if vim.fn.executable('wl-copy') == 1 and vim.fn.executable('wl-paste') == 1 then
+    -- Wayland clipboard
+    vim.g.clipboard = {
+      name = 'wl-clipboard',
+      copy = {
+        ['+'] = 'wl-copy',
+        ['*'] = 'wl-copy',
+      },
+      paste = {
+        ['+'] = 'wl-paste',
+        ['*'] = 'wl-paste',
+      },
+      cache_enabled = 0,
+    }
+  elseif vim.fn.executable('xclip') == 1 then
+    -- X11 clipboard
+    vim.g.clipboard = {
+      name = 'xclip',
+      copy = {
+        ['+'] = 'xclip -selection clipboard',
+        ['*'] = 'xclip -selection primary',
+      },
+      paste = {
+        ['+'] = 'xclip -selection clipboard -o',
+        ['*'] = 'xclip -selection primary -o',
+      },
+      cache_enabled = 0,
+    }
+  end
+end
 
 vim.g.yaml_indent = 2

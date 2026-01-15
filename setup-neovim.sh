@@ -20,13 +20,13 @@ install_packages() {
 
 	for pkg in "${packages[@]}"; do
 		if ! is_installed "$pkg"; then
-			to_install+=("$pkg")
+	 to_install+=("$pkg")
 		else
-			echo "$pkg is already installed."
+	 echo "$pkg is already installed."
 		fi
 	done
 
-	if [ ${#to_install[@]} -gt 0 ]; then
+	if [ ${#to_install[@]} -gt 0 ]; thenhere are some issues with your config. Run :LualineNotices for details
 		echo "Installing: ${to_install[*]}"
 		sudo pacman -S --noconfirm "${to_install[@]}"
 	else
@@ -54,7 +54,7 @@ install_packages "${SYSTEM_PACKAGES[@]}"
 
 # 2. Install Node.js global packages (formatters, linters)
 echo "Installing Node.js global packages..."
-npm install -g npm-groovy-lint prettier eslint_d prettier_d
+sudo npm install -g npm-groovy-lint prettier eslint_d prettier_d
 
 # 3. Install Python packages
 echo "Installing Python packages..."
