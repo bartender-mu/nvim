@@ -20,13 +20,13 @@ install_packages() {
 
 	for pkg in "${packages[@]}"; do
 		if ! is_installed "$pkg"; then
-	 to_install+=("$pkg")
+			to_install+=("$pkg")
 		else
-	 echo "$pkg is already installed."
+			echo "$pkg is already installed."
 		fi
 	done
 
-	if [ ${#to_install[@]} -gt 0 ]; thenhere are some issues with your config. Run :LualineNotices for details
+	if [ ${#to_install[@]} -gt 0 ]; then
 		echo "Installing: ${to_install[*]}"
 		sudo pacman -S --noconfirm "${to_install[@]}"
 	else
@@ -37,6 +37,7 @@ install_packages() {
 # 1. Install system packages
 echo "Installing system packages..."
 SYSTEM_PACKAGES=(
+	neovim
 	nodejs
 	python
 	go
@@ -48,6 +49,8 @@ SYSTEM_PACKAGES=(
 	fzf
 	lazygit
 	base-devel
+	git
+	tmux
 )
 
 install_packages "${SYSTEM_PACKAGES[@]}"
@@ -58,31 +61,60 @@ sudo npm install -g npm-groovy-lint prettier eslint_d prettier_d
 
 # 3. Install Python packages
 echo "Installing Python packages..."
-pip install black
+if ! command -v black >/dev/null; then
+	pip install --user black
+else
+	echo "black is already installed."
+fi
 
 # 4. Install Go tools
 echo "Installing Go tools..."
-go install golang.org/x/tools/cmd/goimports@latest
-go install mvdan.cc/gofumpt@latest
-go install github.com/mgechev/revive@latest
+if ! command -v goimports >/dev/null; then
+	go install golang.org/x/tools/cmd/goimports@latest
+else
+	echo "goimports is already installed."
+fi
+
+if ! command -v gofumpt >/dev/null; then
+	go install mvdan.cc/gofumpt@latest
+else
+	echo "gofumpt is already installed."
+fi
+
+if ! command -v revive >/dev/null; then
+	go install github.com/mgechev/revive@latest
+else
+	echo "revive is already installed."
+fi
+
+if ! command -v shfmt >/dev/null; then
+	go install mvdan.cc/sh/v3/cmd/shfmt@latest
+else
+	echo "shfmt is already installed."
+fi
 
 # 5. Install Rust tools (rustfmt is included with rust, but ensure)
 echo "Rust tools: rustfmt is included with rust package."
 
 # 6. Install Lua tools (stylua via cargo or mason)
 echo "Installing Lua tools..."
-cargo install stylua
+if ! command -v stylua >/dev/null; then
+	cargo install stylua
+else
+	echo "stylua is already installed."
+fi
 
 # 7. Install LSP servers and formatters via Mason (requires Neovim)
 echo "Installing LSP servers and additional formatters via Mason..."
 # Note: This requires Neovim to be set up. Run after Neovim is configured.
-nvim --headless -c "MasonInstall groovy-language-server gopls pyright lua_ls jsonls ts_ls bashls clangd dockerls emmet_ls yamlls tailwindcss solidity_ls_nomicfoundation efm" -c "qa"
+nvim --headless -c "MasonInstall groovy-language-server gopls pyright lua_ls jsonls ts_ls bashls clangd dockerls emmet_ls yamlls tailwindcss solidity_ls_nomicfoundation efm codelldb" -c "qa"
 
 # Additional formatters that Mason might handle or need manual install
 echo "Additional formatters: prettier, black, rustfmt, goimports, shfmt should be handled by conform or installed above."
 
 # 8. Verify installations
 echo "Verifying installations..."
+command -v nvim || echo "Neovim not found"
 command -v node || echo "Node.js not found"
 command -v python || echo "Python not found"
 command -v go || echo "Go not found"
@@ -92,5 +124,25 @@ command -v clang || echo "Clang not found"
 command -v rg || echo "ripgrep not found"
 command -v fzf || echo "fzf not found"
 command -v lazygit || echo "lazygit not found"
+command -v git || echo "git not found"
+command -v tmux || echo "tmux not found"
+command -v shfmt || echo "shfmt not found"
 
-echo "Neovim setup complete! Restart Neovim to load configurations."
+# Check Neovim version
+if command -v nvim >/dev/null; then
+	echo "Neovim version: $(nvim --version | head -1)"
+else
+	echo "ERROR: Neovim is not installed or not in PATH"
+fi
+
+echo ""
+echo "Neovim setup complete!"
+echo "Restart Neovim to load configurations."
+echo ""
+echo "Summary of installed packages:"
+echo "- Core: neovim, git, tmux"
+echo "- Languages: Node.js, Python, Go, Rust, Java (JDK), C/C++ (Clang)"
+echo "- Utilities: ripgrep, fzf, lazygit"
+echo "- Formatters: prettier, black, rustfmt, goimports, gofumpt, shfmt, stylua"
+echo "- LSP servers: Installed via Mason (run Mason in Neovim to verify)"
+echo ""

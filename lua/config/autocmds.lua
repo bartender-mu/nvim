@@ -55,6 +55,27 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Show only nvim-tree on startup
+local nvim_tree_startup_group = vim.api.nvim_create_augroup("NvimTreeStartup", {})
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = nvim_tree_startup_group,
+	callback = function()
+		-- Only run if no file was specified and we're not in a git repository
+		if vim.fn.argc() == 0 then
+			-- Close any other windows
+			local wins = vim.api.nvim_list_wins()
+			for _, win in ipairs(wins) do
+				if win ~= 1 then -- Keep the first window
+					vim.api.nvim_win_close(win, false)
+				end
+			end
+			
+			-- Focus nvim-tree
+			require("nvim-tree.api").tree.focus()
+		end
+	end,
+})
+
 -- on attach function shortcuts
 local lsp_on_attach_group = vim.api.nvim_create_augroup("LspMappings", {})
 vim.api.nvim_create_autocmd("LspAttach", {

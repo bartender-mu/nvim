@@ -9,19 +9,20 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
-    "catppuccin/nvim",          -- ensures the theme is available
+    "folke/tokyonight.nvim",          -- ensures theme is available
   },
+  lazy = false, -- Load with or immediately after theme
   config = function()
     require("lualine").setup({
       options = {
-        theme = "catppuccin",     -- now found
+        theme = "tokyonight",     -- match the colorscheme
         icons_enabled = true,
         section_separators = { left = "", right = "" },
         component_separators = "|",
 
         -- *** TRANSPARENT LUALINE ***
         -- Make every section/component background transparent
-        -- (Catppuccin already respects `transparent_background = true`,
+        -- (Tokyonight already respects `transparent = true`,
         --  but we force it here for extra safety)
         globalstatus = true,
       },
@@ -64,7 +65,7 @@ return {
     ------------------------------------------------------------------
     -- 3. Force lualine background to be fully transparent
     ------------------------------------------------------------------
-    -- Catppuccin already sets `bg = nil` when `transparent_background = true`,
+    -- Tokyonight already sets `bg = nil` when `transparent = true`,
     -- but some highlight groups still carry a background.  The lines below
     -- wipe it out completely.
     vim.api.nvim_create_autocmd("ColorScheme", {
