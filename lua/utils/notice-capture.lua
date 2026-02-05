@@ -79,47 +79,51 @@ function M.setup_noice_capture()
     return
   end
   
-  -- Use autocmds to capture Noice events since API might not be available
+  -- Capture notifications through Noice's API if available
+  if noice.api and noice.api.on_event then
+    noice.api.on_event("msg_show", function(event)
+      M.capture_notice({
+        source = "noice",
+        level = map_noice_level(event.level),
+        message = event.msg,
+        title = event.title,
+      })
+    end)
+  end
+  
+  -- Use autocmds to capture vim.notify calls after Noice is set up
   vim.api.nvim_create_autocmd("User", {
     pattern = "NoiceMessage",
     callback = function(event)
+      local data = event.data or {}
       M.capture_notice({
         source = "noice",
-        level = "INFO",
-        message = vim.inspect(event.data),
-        title = "Noice Event",
+        level = map_noice_level(data.level) or "INFO",
+        message = data.msg or "Unknown message",
+        title = data.title,
       })
     end,
   })
-  
-  -- Alternative: Hook into vim.notify after Noice has taken over
-  if vim.notify then
-    local original_notify = vim.notify
-    vim.notify = function(msg, level, opts)
+end
+
+-- Initialize nvim-notify wrapper
+function M.setup_notify_wrapper()
+  -- Don't override vim.notify - Noice already handles it
+  -- Instead, capture notifications through Noice's system
+  local ok, noice = pcall(require, "noice")
+  if ok and noice.notify then
+    local original_noice_notify = noice.notify
+    
+    noice.notify = function(msg, level, opts)
       M.capture_notice({
         source = "noice",
         level = map_notify_level(level),
         message = msg,
         title = opts and opts.title,
       })
-      return original_notify(msg, level, opts)
+      
+      return original_noice_notify(msg, level, opts)
     end
-  end
-end
-
--- Initialize nvim-notify wrapper
-function M.setup_notify_wrapper()
-  local original_notify = vim.notify
-  
-  vim.notify = function(msg, level, opts)
-    M.capture_notice({
-      source = "notify",
-      level = map_notify_level(level),
-      message = msg,
-      title = opts and opts.title,
-    })
-    
-    return original_notify(msg, level, opts)
   end
 end
 

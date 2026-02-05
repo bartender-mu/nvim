@@ -12,7 +12,7 @@ return {
     local capture = require("utils.notice-capture")
     local display = require("utils.notice-display")
     
-    -- Initialize capture system
+    -- Initialize capture system AFTER Noice is already set up
     capture.setup()
     
     -- Global keymaps
