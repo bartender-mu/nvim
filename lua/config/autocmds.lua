@@ -55,6 +55,16 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
+-- Filetype detection for Laravel Blade files
+local blade_filetype_group = vim.api.nvim_create_augroup("BladeFiletype", {})
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	group = blade_filetype_group,
+	pattern = "*.blade.php",
+	callback = function()
+		vim.opt.filetype = "blade"
+	end,
+})
+
 -- on attach function shortcuts
 local lsp_on_attach_group = vim.api.nvim_create_augroup("LspMappings", {})
 vim.api.nvim_create_autocmd("LspAttach", {

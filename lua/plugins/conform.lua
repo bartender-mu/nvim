@@ -29,6 +29,8 @@ return {
 			groovy = { "npm-groovy-lint" },
 			Jenkinsfile = { "npm-groovy-lint" },
 			sh = { "shfmt" },
+			php = { "php_cs_fixer" },
+			blade = { "blade-formatter" },
 			-- Add more as needed
 		},
 
@@ -39,6 +41,22 @@ return {
 			},
 			prettier = {
 				prepend_args = { "--single-quote", "--trailing-comma", "es5" },
+			},
+			php_cs_fixer = {
+				command = "php-cs-fixer",
+				args = {
+					"fix",
+					"--using-cache=no",
+					"--config",
+					".php-cs-fixer.php",
+					"$FILENAME",
+				},
+				stdin = false,
+			},
+			blade_formatter = {
+				command = "blade-formatter",
+				args = { "--write", "$FILENAME" },
+				stdin = false,
 			},
 		},
 	},

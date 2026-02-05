@@ -5,6 +5,7 @@ require("servers.lua_ls")(capabilities)
 require("servers.pyright")(capabilities)
 require("servers.gopls")(capabilities)
 require("servers.groovy-language-server")(capabilities)
+require("servers.intelephense")(capabilities)
 require("servers.jsonls")(capabilities)
 require("servers.ts_ls")(capabilities)
 require("servers.bashls")(capabilities)
@@ -18,11 +19,15 @@ require("servers.solidity_ls_nomicfoundation")(capabilities)
 -- Linters & Formatters
 require("servers.efm-langserver")(capabilities)
 
+-- Initialize notice capture system
+require("utils.notice-capture").setup()
+
 vim.lsp.enable({
   'lua_ls',
   'pyright',
   'gopls',
   'groovy-language-server',
+  'intelephense',
   'jsonls',
   'ts_ls',
   'bashls',

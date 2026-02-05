@@ -9,19 +9,19 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
-    "catppuccin/nvim",          -- ensures the theme is available
+    "folke/tokyonight.nvim",     -- ensures the theme is available
   },
   config = function()
     require("lualine").setup({
       options = {
-        theme = "catppuccin",     -- now found
+        theme = "tokyonight",     -- now found
         icons_enabled = true,
         section_separators = { left = "", right = "" },
         component_separators = "|",
 
         -- *** TRANSPARENT LUALINE ***
         -- Make every section/component background transparent
-        -- (Catppuccin already respects `transparent_background = true`,
+        -- (Tokyo Night already respects `transparent = true`,
         --  but we force it here for extra safety)
         globalstatus = true,
       },
@@ -64,7 +64,7 @@ return {
     ------------------------------------------------------------------
     -- 3. Force lualine background to be fully transparent
     ------------------------------------------------------------------
-    -- Catppuccin already sets `bg = nil` when `transparent_background = true`,
+    -- Tokyo Night already sets `bg = nil` when `transparent = true`,
     -- but some highlight groups still carry a background.  The lines below
     -- wipe it out completely.
     vim.api.nvim_create_autocmd("ColorScheme", {
@@ -83,16 +83,20 @@ return {
           "lualine_a_command", "lualine_b_command", "lualine_c_command",
           "lualine_a_inactive", "lualine_b_inactive", "lualine_c_inactive",
         }) do
-          local cur = hl(group, true)
-          cur.bg = nil               -- remove background
-          set_hl(0, group, cur)
+          local ok, cur = pcall(hl, group, {})
+          if ok and cur then
+            cur.bg = nil               -- remove background
+            set_hl(0, group, cur)
+          end
         end
 
         -- Separator highlight groups
         for _, sep in ipairs({ "lualine_transitional", "lualine_section_separator" }) do
-          local cur = hl(sep, true) or {}
-          cur.bg = nil
-          set_hl(0, sep, cur)
+          local ok, cur = pcall(hl, sep, {})
+          if ok and cur then
+            cur.bg = nil
+            set_hl(0, sep, cur)
+          end
         end
       end,
     })
