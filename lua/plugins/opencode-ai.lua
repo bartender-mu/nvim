@@ -5,15 +5,16 @@
 -- ================================================================================================
 
 return {
-  "opencode-ai/neovim-plugin",
+  "nvim-lua/plenary.nvim",
   name = "opencode-ai",
   event = "VeryLazy",
   config = function()
-    local opencode = require("opencode")
+    -- Initialize Opencode AI settings
+    local api_key = os.getenv("OPENCODE_API_KEY") or vim.g.opencode_api_key
     
-    -- Initialize Opencode AI with Neovim-specific configuration
-    opencode.setup({
-      api_key = os.getenv("OPENCODE_API_KEY") or vim.g.opencode_api_key,
+    -- Store Opencode AI configuration
+    vim.g.opencode_config = {
+      api_key = api_key,
       model = "big-pickle",
       context = "laravel_development",
       integrations = {
@@ -34,7 +35,7 @@ return {
           }
         }
       }
-    })
+    }
     
     -- Register Opencode AI commands
     vim.api.nvim_create_user_command("OpencodeAsk", function(opts)
@@ -332,8 +333,8 @@ return {
     
     -- Integrate with existing notice capture system
     vim.defer_fn(function()
-      local capture = require("utils.notice-capture")
-      if capture then
+      local ok, capture = pcall(require, "utils.notice-capture")
+      if ok and capture then
         -- Add notice for Opencode AI initialization
         capture.capture_notice({
           source = "opencode",
