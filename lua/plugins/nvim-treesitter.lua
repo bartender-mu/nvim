@@ -11,7 +11,7 @@ return {
 	event = { "BufReadPost", "BufNewFile" },
 	lazy = false,
 	config = function()
-		local configs = require("nvim-treesitter.configs")
+		local configs = require("nvim-treesitter")
 		configs.setup({
 			-- language parsers that MUST be installed
 			ensure_installed = {
