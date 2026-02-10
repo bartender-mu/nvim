@@ -54,19 +54,8 @@ end, { desc = "Force Format File" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[G]o to [D]efinition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "[G]o to [D]eclaration" })
 
--- Opencode integration
-vim.keymap.set('n', '<leader>oc', function()
-  local prompt = vim.fn.input('Opencode prompt: ')
-  if prompt ~= '' then
-    require('utils.opencode').run(prompt)
-  end
-end, { desc = 'Run opencode with prompt' })
+-- Notification toggle
+vim.keymap.set('n', '<leader>nt', function()
+  require('utils.notification-control').toggle_notifications()
+end, { desc = "Toggle notifications on/off" })
 
-vim.keymap.set('v', '<leader>oc', function()
-  local lines = vim.fn.getline("'<", "'>")
-  local text = table.concat(lines, '\n')
-  local prompt = vim.fn.input('Opencode prompt for selection: ')
-  if prompt ~= '' then
-    require('utils.opencode').run(prompt .. '\n\nSelected code:\n' .. text)
-  end
-end, { desc = 'Run opencode on selected code' })

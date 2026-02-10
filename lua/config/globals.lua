@@ -5,3 +5,4 @@
 
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+vim.g.notifications_enabled = false

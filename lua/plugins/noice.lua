@@ -19,9 +19,9 @@ return {
         inc_rename = false,
         lsp_doc_border = true,
       },
-      -- Enable notifications but don't completely take over vim.notify
+      -- Enable notifications only if globally enabled
       notify = {
-        enabled = true,
+        enabled = vim.g.notifications_enabled ~= false,
       },
     }
     vim.keymap.set('n', '<leader>nd', ':Noice dismiss<CR>', { noremap = true, silent = true }) -- <Space>nd

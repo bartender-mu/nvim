@@ -15,5 +15,7 @@ return {
 	{ "echasnovski/mini.pairs", version = "*", opts = {} },
 	{ "echasnovski/mini.trailspace", version = "*", opts = {} },
 	{ "echasnovski/mini.bufremove", version = "*", opts = {} },
-	{ "echasnovski/mini.notify", version = "*", opts = {} },
+	-- Only load mini.notify if notifications are enabled
+	(vim.g.notifications_enabled == true) and 
+	{ "echasnovski/mini.notify", version = "*", opts = {} } or nil,
 }

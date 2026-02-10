@@ -31,6 +31,9 @@ require("config.options")
 require("config.keymaps")
 require("config.autocmds")
 
+-- Initialize notification control system
+require("utils.notification-control").setup()
+
 local plugins_dir = "plugins"
 
 require("lazy").setup({

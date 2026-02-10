@@ -71,6 +71,13 @@ end
 
 -- Behavior Settings
 vim.opt.errorbells = false -- Disable error sounds
+vim.opt.shortmess = vim.opt.shortmess + "F" -- Don't show file info when writing
+vim.opt.report = 0 -- Don't show number of changed lines
+vim.opt.showcmd = false -- Don't show command in bottom bar
+vim.opt.shm = vim.opt.shm + "F" -- File info messages
+vim.opt.shm = vim.opt.shm + "W" -- Written messages
+vim.opt.shm = vim.opt.shm + "A" -- Append messages
+vim.opt.shm = vim.opt.shm + "I" -- Intro messages
 vim.opt.backspace = "indent,eol,start" -- Make backspace behave naturally
 vim.opt.autochdir = false -- Don't change directory automatically
 vim.opt.iskeyword:append("-") -- Treat dash as part of a word

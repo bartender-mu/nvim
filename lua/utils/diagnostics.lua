@@ -1,11 +1,18 @@
 local M = {}
 
-local diagnostic_signs = {
-	Error = " ",
-	Warn = " ",
-	Hint = "",
-	Info = "",
-}
+	local diagnostic_signs = {
+		Error = " ",
+		Warn = " ",
+		Hint = " ",
+		Info = " ",
+	}
+	-- Basic colors for different severity levels
+	local colors = {
+		Error = "#ff6d6e",
+		Warn = "#fabd2a",
+		Hint = "#10d98",
+		Info = "#0db7ff",
+	}
 
 M.setup = function()
 	vim.diagnostic.config({
