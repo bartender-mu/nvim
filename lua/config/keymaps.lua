@@ -59,3 +59,5 @@ vim.keymap.set('n', '<leader>nt', function()
   require('utils.notification-control').toggle_notifications()
 end, { desc = "Toggle notifications on/off" })
 
+
+

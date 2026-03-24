@@ -15,12 +15,10 @@ require("servers.emmet_ls")(capabilities)
 require("servers.yamlls")(capabilities)
 require("servers.tailwindcss")(capabilities)
 require("servers.solidity_ls_nomicfoundation")(capabilities)
+require("servers.html")(capabilities)
 
 -- Linters & Formatters
 require("servers.efm-langserver")(capabilities)
-
--- Initialize notice capture system
-require("utils.notice-capture").setup()
 
 vim.lsp.enable({
   'lua_ls',
@@ -37,5 +35,6 @@ vim.lsp.enable({
   'yamlls',
   'tailwindcss',
   'solidity_ls_nomicfoundation',
+  'html',
   'efm',
 })
