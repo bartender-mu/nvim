@@ -1,26 +1,36 @@
-# NeoVim for Web Development & Software Development Setup Guide
+# nvim-lite
+A minimal neovim configuration.
 
-## Overview
+Requires NeoVim 0.12 or later
 
-Thanks for checking out my NeoVim config. For a full walkthrough please checkout the tutorial episodes below. Supported languages & frameworks:
-`typescript`, `javascript`, `python`, `golang`, `lua`, `bash`, `c`, `c++`, `json`, `yaml`, `docker`, `html`, `css`, `tailwindcss`, `rust`, `solidity`, `vue`, `react`, `svelte`
+Copy and enjoy it with:
+```bash
+mkdir -p ~/.config/nvim && curl -fsSL https://raw.githubusercontent.com/radleylewis/nvim-lite/master/init.lua -o ~/.config/nvim/init.lua
+```
 
-## YouTube Tutorial
+## Dependencies
 
-Part 1: Options, Keymaps & Plugins ([link](https://youtu.be/cdAMq2KcF4w))  
-Part 2: LSP, Linters, Formatters, AI Assistance, Completion ([link](https://youtu.be/qp1OcolI6x0))  
-Part 3: TMUX, Git & Debugging ([link](https://youtu.be/JN4Zbs0ypwM))
+NeoVim `0.12` (available in the AUR)
+```bash
+paru -S neovim-git
+```
 
-## Requires Neovim >= 0.11.3
+Treesitter `0.26.5` (install using `cargo`)
+```bash
+cargo install --locked tree-sitter-cli
+```
 
-Please make sure you're on at least version **v0.11.3** of NeoVim.
+`golang` (for `efm-langserver`)
+```bash
+sudo pacman -S go
+```
 
-## Forking/Template/Contributing
+LuaSnip dependencies:
+```bash
+sudo pacman -S lua-jsregexp
+```
 
-Feel free to use this config as a template. Contributions are welcome especially for additional languages.
-
-Please feel free to assist others in the issues tab!
-
-## License
-
-This config is released under GPLv3.
+Other general dependencies:
+```bash
+sudo pacman -S git ripgrep fzf fd
+```
