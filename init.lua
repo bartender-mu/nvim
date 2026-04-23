@@ -256,7 +256,6 @@ vim.api.nvim_create_autocmd("FileType", {
 
 require("plugins").load()
 require("whichkey")
-require("_noice")
 require("treesitter")
 require("nvimtree")
 require("fzf")

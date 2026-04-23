@@ -18,7 +18,6 @@ vim.pack.add({
 	},
 	"https://github.com/L3MON4D3/LuaSnip",
 	"https://github.com/folke/which-key.nvim",
-	"https://github.com/folke/noice.nvim",
 })
 
 local function packadd(name)
@@ -39,6 +38,5 @@ return {
 		packadd("blink.cmp")
 		packadd("LuaSnip")
 		packadd("which-key.nvim")
-		packadd("noice.nvim")
 	end,
 }
