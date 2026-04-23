@@ -7,110 +7,73 @@ require("which-key").setup({
 
 local wk = require("which-key")
 
+-- Groups (descriptions shown in popup)
 wk.add({
-	{ "<leader>", group = "leader", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>", group = "leader" },
+	{ "<leader>f", group = "fzf" },
+	{ "<leader>g", group = "goto" },
+	{ "<leader>h", group = "git hunk" },
+	{ "<leader>b", group = "buffer" },
+	{ "<leader>s", group = "split" },
+	{ "<leader>d", group = "diagnostics" },
+	{ "<leader>a", group = "action" },
+})
 
+-- Leader mappings
 wk.add({
-	{ "<leader>c", desc = "Clear search", mode = "n" },
-	{ "<leader>e", desc = "Toggle NvimTree", mode = "n" },
-	{ "<leader>t", desc = "Toggle floating terminal", mode = "n" },
-	{ "<leader>pa", desc = "Copy file path", mode = "n" },
-	{ "<leader>td", desc = "Toggle diagnostics", mode = "n" },
-	{ "<leader>w", desc = "Save file", mode = "n" },
-	{ "<leader>q", desc = "Quit buffer", mode = "n" },
-	{ "<leader>wq", desc = "Save and quit", mode = "n" },
-	{ "<leader>qq", desc = "Force quit", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>c", desc = "Clear search" },
+	{ "<leader>e", desc = "Toggle NvimTree" },
+	{ "<leader>t", desc = "Toggle floating terminal" },
+	{ "<leader>pa", desc = "Copy file path" },
+	{ "<leader>td", desc = "Toggle diagnostics" },
+	{ "<leader>w", desc = "Save file" },
+	{ "<leader>wq", desc = "Save and quit" },
+	{ "<leader>qq", desc = "Force quit" },
 
-wk.add({
-	{ "<leader>f", group = "fzf", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>ff", desc = "Files" },
+	{ "<leader>fg", desc = "Live Grep" },
+	{ "<leader>fb", desc = "Buffers" },
+	{ "<leader>fh", desc = "Help Tags" },
+	{ "<leader>fx", desc = "Diagnostics Document" },
+	{ "<leader>fX", desc = "Diagnostics Workspace" },
 
-wk.add({
-	{ "<leader>ff", desc = "Files", mode = "n" },
-	{ "<leader>fg", desc = "Live Grep", mode = "n" },
-	{ "<leader>fb", desc = "Buffers", mode = "n" },
-	{ "<leader>fh", desc = "Help Tags", mode = "n" },
-	{ "<leader>fx", desc = "Diagnostics Document", mode = "n" },
-	{ "<leader>fX", desc = "Diagnostics Workspace", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>gd", desc = "Definitions" },
+	{ "<leader>gD", desc = "Definition" },
+	{ "<leader>gS", desc = "Definition (split)" },
+	{ "<leader>fr", desc = "References" },
+	{ "<leader>ft", desc = "Typedef" },
+	{ "<leader>fs", desc = "Document symbols" },
+	{ "<leader>fw", desc = "Workspace symbols" },
+	{ "<leader>fi", desc = "Implementations" },
 
-wk.add({
-	{ "<leader>g", group = "goto", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>bn", desc = "Next buffer" },
+	{ "<leader>bp", desc = "Previous buffer" },
 
-wk.add({
-	{ "<leader>gd", desc = "Definitions", mode = "n" },
-	{ "<leader>gD", desc = "Definition", mode = "n" },
-	{ "<leader>gS", desc = "Definition (split)", mode = "n" },
-	{ "<leader>fr", desc = "References", mode = "n" },
-	{ "<leader>ft", desc = "Typedef", mode = "n" },
-	{ "<leader>fs", desc = "Document symbols", mode = "n" },
-	{ "<leader>fw", desc = "Workspace symbols", mode = "n" },
-	{ "<leader>fi", desc = "Implementations", mode = "n" },
-	{ "<leader>fd", desc = "Definitions", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>sv", desc = "Split vertically" },
+	{ "<leader>sh", desc = "Split horizontally" },
 
-wk.add({
-	{ "<leader>h", group = "git hunk", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>D", desc = "Line diagnostics" },
+	{ "<leader>dl", desc = "Show line diagnostics" },
+	{ "<leader>nd", desc = "Next diagnostic" },
+	{ "<leader>pd", desc = "Previous diagnostic" },
 
-wk.add({
-	{ "]h", desc = "Next hunk", mode = "n" },
-	{ "[h", desc = "Previous hunk", mode = "n" },
-	{ "<leader>hs", desc = "Stage hunk", mode = "n" },
-	{ "<leader>hr", desc = "Reset hunk", mode = "n" },
-	{ "<leader>hp", desc = "Preview hunk", mode = "n" },
-	{ "<leader>hb", desc = "Blame line", mode = "n" },
-	{ "<leader>hB", desc = "Toggle inline blame", mode = "n" },
-	{ "<leader>hd", desc = "Diff this", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>ca", desc = "Code action" },
+	{ "<leader>rn", desc = "Rename" },
+	{ "<leader>oi", desc = "Organize imports" },
 
-wk.add({
-	{ "<leader>b", group = "buffer", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>x", desc = "Delete without yank" },
 
-wk.add({
-	{ "<leader>bn", desc = "Next buffer", mode = "n" },
-	{ "<leader>bp", desc = "Previous buffer", mode = "n" },
-}, { mode = "n" })
+	{ "<leader>q", desc = "Open diagnostic list" },
+})
 
+-- Git hunk mappings (non-leader keys)
 wk.add({
-	{ "<leader>s", group = "split", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>sv", desc = "Split vertically", mode = "n" },
-	{ "<leader>sh", desc = "Split horizontally", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>d", group = "diagnostics", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>D", desc = "Line diagnostics", mode = "n" },
-	{ "<leader>d", desc = "Cursor diagnostics", mode = "n" },
-	{ "<leader>nd", desc = "Next diagnostic", mode = "n" },
-	{ "<leader>pd", desc = "Previous diagnostic", mode = "n" },
-	{ "<leader>dl", desc = "Show line diagnostics", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>a", group = "action", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>ca", desc = "Code action", mode = "n" },
-	{ "<leader>rn", desc = "Rename", mode = "n" },
-	{ "<leader>oi", desc = "Organize imports", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>x", desc = "Delete without yank", mode = "n" },
-}, { mode = "n" })
-
-wk.add({
-	{ "<leader>q", desc = "Open diagnostic list", mode = "n" },
-}, { mode = "n" })
+	{ "]h", desc = "Next hunk" },
+	{ "[h", desc = "Previous hunk" },
+	{ "<leader>hs", desc = "Stage hunk" },
+	{ "<leader>hr", desc = "Reset hunk" },
+	{ "<leader>hp", desc = "Preview hunk" },
+	{ "<leader>hb", desc = "Blame line" },
+	{ "<leader>hB", desc = "Toggle inline blame" },
+	{ "<leader>hd", desc = "Diff this" },
+})
