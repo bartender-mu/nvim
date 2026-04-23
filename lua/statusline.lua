@@ -80,21 +80,21 @@ end
 local function mode_icon()
 	local mode = vim.fn.mode()
 	local modes = {
-		n = " \u{f121}  NORMAL",
-		i = " \u{f11c}  INSERT",
-		v = " \u{f0168} VISUAL",
-		V = " \u{f0168} V-LINE",
-		["\22"] = " \u{f0168} V-BLOCK",
-		c = " \u{f120} COMMAND",
-		s = " \u{f0c5} SELECT",
-		S = " \u{f0c5} S-LINE",
-		["\19"] = " \u{f0c5} S-BLOCK",
-		R = " \u{f044} REPLACE",
-		r = " \u{f044} REPLACE",
-		["!"] = " \u{f489} SHELL",
-		t = " \u{f120} TERMINAL",
+		n = " NORMAL",
+		i = " INSERT",
+		v = " VISUAL",
+		V = " V-LINE",
+		["\22"] = " V-BLOCK",
+		c = " COMMAND",
+		s = " SELECT",
+		S = " S-LINE",
+		["\19"] = " S-BLOCK",
+		R = " REPLACE",
+		r = " REPLACE",
+		["!"] = " SHELL",
+		t = " TERMINAL",
 	}
-	return modes[mode] or (" \u{f059} " .. mode)
+	return modes[mode] or (" " .. mode)
 end
 
 local function get_mode_color()
@@ -157,28 +157,31 @@ local function setup_dynamic_statusline()
 
 			vim.opt_local.statusline = table.concat({
 				"%#StatusLineSep#",
-				"  ",
+				"╭ ",
 				"%#" .. mode_hl .. "#",
 				"%{v:lua.mode_icon()}",
 				"%#StatusLineSep#",
-				" ",
+				" ╮ ",
 				"%#StatusLineFile#",
-				" \u{e0b1} %f %h%m%r",
+				"%f %h%m%r",
 				"%#StatusLineSep#",
-				" ",
+				" │ ",
 				"%#StatusLineGit#",
 				"%{v:lua.git_branch()}",
 				"%#StatusLineSep#",
-				" ",
+				" │ ",
 				"%#StatusLineFileType#",
 				"%{v:lua.file_type()}",
 				"%#StatusLineSep#",
-				" ",
+				" │ ",
 				"%#StatusLinePos#",
 				"%{v:lua.file_size()}",
 				"%=",
+				"%#StatusLineSep#",
+				" ╰ ",
 				"%#StatusLinePos#",
-				" \u{f017} %l:%c  %P ",
+				"%l:%c ",
+				"%P ",
 			})
 		end,
 	})
@@ -186,15 +189,17 @@ local function setup_dynamic_statusline()
 	vim.api.nvim_create_autocmd({ "WinLeave", "BufLeave" }, {
 		callback = function()
 			vim.opt_local.statusline = table.concat({
-				"%#StatusLineSep#  ",
+				"%#StatusLineSep#  ╭ ",
 				"%#StatusLineFile#",
 				"%f %h%m%r",
 				"%#StatusLineSep# ",
+				"│ ",
 				"%#StatusLineFileType#",
 				"%{v:lua.file_type()}",
 				"%#StatusLineSep# ",
+				"│ ",
 				"%#StatusLinePos#",
-				"%=  %l:%c   %P ",
+				"%=  %l:%c   %P ╯",
 			})
 		end,
 	})
