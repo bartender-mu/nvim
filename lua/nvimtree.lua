@@ -14,7 +14,6 @@ require("nvim-tree").setup({
 				folder_arrow = true,
 				git = true,
 			},
-			placement = "after",
 		},
 	},
 })
