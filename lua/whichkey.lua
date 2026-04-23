@@ -1,6 +1,6 @@
 require("which-key").setup({
-	triggers = "auto",
-	window = {
+	triggers = { "auto" },
+	win = {
 		border = "single",
 	},
 })
