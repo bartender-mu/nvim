@@ -15,7 +15,6 @@ require("nvim-tree").setup({
 				git = true,
 			},
 			placement = "after",
-			padding = 1,
 		},
 	},
 })
